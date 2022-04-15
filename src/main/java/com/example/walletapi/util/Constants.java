@@ -5,4 +5,6 @@ public class Constants {
     public static final String FAILURE = "Failure";
     public static final String USER_ALREADY_EXISTS = "User already exists";
     public static final String ACTIVE = "ACTIVE";
+    public static final String YES = "Y";
+    public static final String NO = "N";
 }

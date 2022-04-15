@@ -21,22 +21,32 @@ public class LoginService {
         this.loginRepository = loginRepository;
     }
 
-    public void signUp(User user) {
-        List<User> userList = loginRepository.findAll();
-        AtomicBoolean userExist = checkIfUserExist(user, userList);
-        if (!userExist.get()) {
-            user.setStatus(Constants.ACTIVE);
-            user.setDateCreated(LocalDateTime.now());
-            user.setLastUpdated(LocalDateTime.now());
-            loginRepository.save(user);
+    public String signUp(User user) {
+      String status = "";
+        try {
+            List<User> userList = loginRepository.findAll();
+            AtomicBoolean userExist = checkIfUserExist(user, userList);
+            if (!userExist.get()) {
+                user.setIsActive(Constants.YES);
+                user.setDateCreated(LocalDateTime.now());
+                user.setLastUpdated(LocalDateTime.now());
+                loginRepository.save(user);
+                status = Constants.SUCCESS;
+            } else {
+                status = Constants.USER_ALREADY_EXISTS;
+            }
+        } catch (Exception exc) {
+            status = Constants.FAILURE;
         }
+        return status;
     }
 
     private AtomicBoolean checkIfUserExist(User user, List<User> userList) {
         AtomicBoolean result = new AtomicBoolean(false);
         if (user != null && !CollectionUtils.isEmpty(userList)) {
             userList.forEach( record -> {
-                if (record.equals(user)) {
+                String email = record.getEmail();
+                if (email.equalsIgnoreCase(user.getEmail())) {
                     result.set(true);
                 }
             });

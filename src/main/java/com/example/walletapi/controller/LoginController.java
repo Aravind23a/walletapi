@@ -3,6 +3,8 @@ package com.example.walletapi.controller;
 import com.example.walletapi.model.User;
 import com.example.walletapi.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +24,8 @@ public class LoginController {
     }
 
     @PostMapping("/signup")
-    public void signUp(@RequestBody @Valid User user) {
-        loginService.signUp(user);
+    public ResponseEntity<String> signUp(@RequestBody @Valid User user) {
+        String status = loginService.signUp(user);
+        return ResponseEntity.status(HttpStatus.OK).body(status);
     }
 }

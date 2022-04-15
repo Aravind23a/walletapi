@@ -1,6 +1,9 @@
 package com.example.walletapi.model;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 @Entity
@@ -9,6 +12,9 @@ public class User {
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid")
+    @Size(max = 32)
     private String id;
     @Column(name = "name")
     private String name;
@@ -18,8 +24,8 @@ public class User {
     private String phone;
     @Column(name = "password")
     private String password;
-    @Column(name = "status")
-    private String status;
+    @Column(name = "isactive")
+    private String isActive;
     @Column(name = "datecreated")
     private LocalDateTime dateCreated;
     @Column(name = "lastupdated")
@@ -65,12 +71,12 @@ public class User {
         this.password = password;
     }
 
-    public String getStatus() {
-        return status;
+    public String getIsActive() {
+        return isActive;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 
     public LocalDateTime getDateCreated() {
