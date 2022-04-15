@@ -4,26 +4,25 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user")
+@Table(name = "systemuser")
 public class User {
 
     @Id
-    @GeneratedValue
-    @Column
+    @Column(name = "id")
     private String id;
-    @Column
+    @Column(name = "name")
     private String name;
-    @Column
+    @Column(name = "email")
     private String email;
-    @Column
+    @Column(name = "phone")
     private String phone;
-    @Column
+    @Column(name = "password")
     private String password;
-    @Column
-    private String isActive;
-    @Column
+    @Column(name = "status")
+    private String status;
+    @Column(name = "datecreated")
     private LocalDateTime dateCreated;
-    @Column
+    @Column(name = "lastupdated")
     private LocalDateTime lastUpdated;
 
     public String getId() {
@@ -66,12 +65,12 @@ public class User {
         this.password = password;
     }
 
-    public String getIsActive() {
-        return isActive;
+    public String getStatus() {
+        return status;
     }
 
-    public void setIsActive(String isActive) {
-        this.isActive = isActive;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public LocalDateTime getDateCreated() {
