@@ -1,9 +1,12 @@
 package com.example.walletapi.service;
 
+import com.example.walletapi.model.LoginModel;
 import com.example.walletapi.model.User;
 import com.example.walletapi.repository.LoginRepository;
+import com.example.walletapi.util.ApiResponse;
 import com.example.walletapi.util.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
@@ -52,5 +55,18 @@ public class LoginService {
             });
         }
         return result;
+    }
+
+    public ApiResponse login(LoginModel loginModel) {
+        ApiResponse apiResponse = new ApiResponse();
+        User user = loginRepository.findOneByEmailIgnoreCaseAndPassword(loginModel.getEmail(), loginModel.getPassword());
+        if (user != null) {
+            apiResponse.setStatus(HttpStatus.OK);
+            apiResponse.setMessage(Constants.LOGIN_SUCCESSFUL);
+        } else {
+            apiResponse.setStatus(HttpStatus.UNAUTHORIZED);
+            apiResponse.setMessage(Constants.LOGIN_FAILED);
+        }
+        return apiResponse;
     }
 }
